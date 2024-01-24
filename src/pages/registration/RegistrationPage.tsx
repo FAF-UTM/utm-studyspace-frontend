@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 export default function RegistrationPage() {
-
+    const navigate = useNavigate();
     const [values, setValues] = useState({ email: "", password: "" });
     useEffect(() => {
 
@@ -22,6 +22,7 @@ export default function RegistrationPage() {
                 { withCredentials: true }
             );
             console.log(data)
+            navigate("/dashboard");
 
         } catch (err) {
             console.log(err);

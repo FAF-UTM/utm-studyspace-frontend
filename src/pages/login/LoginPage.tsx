@@ -20,6 +20,11 @@ export default function LoginPage() {
         toast.error(error, {
             position: "bottom-right",
         });
+
+    const googleFailure = (error: any) => {
+        console.log("Google Sign In was unsuccessful. Try Again Later", error);
+        generateError("Google Sign In was unsuccessful. Try Again Later");
+    };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -36,13 +41,15 @@ export default function LoginPage() {
                     if (email) generateError(email);
                     else if (password) generateError(password);
                 } else {
-                    navigate("/");
+                    navigate("/dashboard");
                 }
             }
         } catch (ex) {
             console.log(ex);
         }
     };
+
+
     return (
         <div className="container">
             <h2>Login to your Account</h2>
@@ -70,6 +77,8 @@ export default function LoginPage() {
                     />
                 </div>
                 <button type="submit">Submit</button>
+
+
                 <span>
           Don't have an account ?<Link to="/register"> Register </Link>
         </span>
