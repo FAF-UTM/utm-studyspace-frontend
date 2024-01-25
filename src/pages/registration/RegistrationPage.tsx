@@ -146,7 +146,7 @@ export default function RegistrationPage() {
 
                 {/* reCAPTCHA Component */}
                 <ReCAPTCHA
-                    sitekey="6LfI6lspAAAAAIfxsIRIyOCobCuqyKDOt1IFTtD5" // Replace with your reCAPTCHA site key
+                    sitekey="6Ld-7VspAAAAAPp--pZYcMqanMMUfMtIMfDjNEQN" // Replace with your reCAPTCHA site key
                     onChange={onCaptchaChange}
                 />
 

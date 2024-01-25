@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
-
+import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
 export default function LoginPage() {
 
@@ -18,11 +18,52 @@ export default function LoginPage() {
 
 
     const [values, setValues] = useState({ email: "", password: "" });
+    const [values_test] = useState({ email: "test@gmail.com", password: "12345678" });
+
+
+
     const generateError = (error: string) =>
         toast.error(error, {
             position: "bottom-right",
         });
 
+    const delay = (ms: number | undefined) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const trygoogle = async () => {
+        await delay(3000); // Introduce a 3-second delay before the functionality runs
+
+        try {
+            const { data } = await axios.post(
+                "http://localhost:4000/login",
+                {
+                    ...values_test,
+                },
+                { withCredentials: true }
+            );
+            if (data) {
+                // Add your code here to handle the 'data' response.
+            }
+        } catch (ex) {
+            console.log(ex);
+        }
+    };
+
+    const handleGoogleLogin = async (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        // GoogleLoginResponseOffline is used only when accessType is set to 'offline'
+        if ('tokenId' in response) {
+            try {
+                await axios.post('http://localhost:4000/google-login', {
+                    token: response.tokenId,
+                }, { withCredentials: true });
+
+                navigate("/dashboard");
+            } catch (error) {
+                console.error("eee",error);
+            }
+        }
+
+
+    };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -84,12 +125,15 @@ export default function LoginPage() {
                 <button type="submit">Submit</button>
 
 
-                <button
-                    onClick={() => window.location.href = 'http://localhost:4000/auth/google'}>Login
-                    with Google
-                </button>
-
-
+<div onClick={trygoogle}>
+                <GoogleLogin
+                    clientId="83916231719-cj5crdn7vptmpe22rp5ms96akdimtgr2.apps.googleusercontent.com"
+                    buttonText="Login with Google"
+                    onSuccess={handleGoogleLogin}
+                    onFailure={handleGoogleLogin}
+                    cookiePolicy={'single_host_origin'}
+                />
+</div>
                 <span>
           Don't have an account ?<Link to="/register"> Register </Link>
         </span>
