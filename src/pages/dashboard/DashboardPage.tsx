@@ -11,6 +11,9 @@ export default function DashboardPage() {
     const goHome = () => {
         navigate('/');
     };
+    const goChat = () => {
+        navigate('/chat');
+    };
     const navigate = useNavigate();
     const [cookies,, removeCookie] = useCookies([]);
     useEffect(() => {
@@ -42,20 +45,35 @@ export default function DashboardPage() {
         navigate("/login");
     };
     return (
-        <div className="container"style={{
-    display: "flex",
-        gap: "1px",
-        WebkitFlexDirection: "column",
-        alignItems: "center"}}>
-        <h2>Dashboard</h2>
+        <div className="container" style={{
+            display: "flex",
+            gap: "1px",
+            WebkitFlexDirection: "column",
+            alignItems: "center"
+        }}>
 
-
+            <h2>Dashboard</h2>
+            <h3>UTM StudySpace</h3>
+            <img style={{
+                width: "150px",
+                height: "auto",
+                margin: "10px",
+                border: "1px solid #888888",
+                borderRadius: "20px"
+            }} src="/logo.svg" alt="StudySpace"/>
+            <br/>
+            <span>
             <button onClick={goHome}>Home</button>
-            <br/>
-            <button onClick={goHome}>Chat</button>
-            <br/>
-            <button onClick={goHome}>Hub</button>
-            <br/>
+                &nbsp;&nbsp;
+                <button onClick={goChat}>Chat</button>
+                &nbsp;&nbsp;
+                <button onClick={goHome}>Hub</button>
+                &nbsp;&nbsp;
+                <button>Stream</button>
+
+
+    </span>
+            <br/> <br/>
             <button onClick={logOut}>Log out</button>
             <ToastContainer/>
 

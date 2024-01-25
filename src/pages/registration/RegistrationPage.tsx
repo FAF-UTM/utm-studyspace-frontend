@@ -27,6 +27,11 @@ export default function RegistrationPage() {
         draggable: true,
     };
 
+    const isStrongPassword = (password: string): boolean => {
+        const regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$");
+        return regex.test(password);
+    };
+
     const handleValidation = () => {
         const { password, confirmPassword, username, email } = values;
         if (password !== confirmPassword) {
@@ -35,8 +40,8 @@ export default function RegistrationPage() {
         } else if (username.length < 3) {
             toast.error("Username should be greater than 3 characters.", toastOptions);
             return false;
-        } else if (password.length < 8) {
-            toast.error("Password should be equal or greater than 8 characters.", toastOptions);
+        } else if (!isStrongPassword(password)) {
+            toast.error("Password should be stronger. It must contain at least one uppercase letter, one lowercase letter, and one number.", toastOptions);
             return false;
         } else if (email === "") {
             toast.error("Email is required.", toastOptions);
