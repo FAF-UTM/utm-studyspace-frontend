@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 
+
 export default function LoginPage() {
 
     const [cookies] = useCookies(['jwt']);
@@ -15,16 +16,13 @@ export default function LoginPage() {
         }
     }, [cookies, navigate]);
 
+
     const [values, setValues] = useState({ email: "", password: "" });
     const generateError = (error: string) =>
         toast.error(error, {
             position: "bottom-right",
         });
 
-    const googleFailure = (error: any) => {
-        console.log("Google Sign In was unsuccessful. Try Again Later", error);
-        generateError("Google Sign In was unsuccessful. Try Again Later");
-    };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -42,6 +40,7 @@ export default function LoginPage() {
                     else if (password) generateError(password);
                 } else {
                     navigate("/dashboard");
+
                 }
             }
         } catch (ex) {
@@ -61,7 +60,10 @@ export default function LoginPage() {
                         name="email"
                         placeholder="Email"
                         onChange={(e) =>
-                            setValues({ ...values, [e.target.name]: e.target.value })
+                            setValues({
+                                ...values,
+                                [e.target.name]: e.target.value
+                            })
                         }
                     />
                 </div>
@@ -72,18 +74,27 @@ export default function LoginPage() {
                         placeholder="Password"
                         name="password"
                         onChange={(e) =>
-                            setValues({ ...values, [e.target.name]: e.target.value })
+                            setValues({
+                                ...values,
+                                [e.target.name]: e.target.value
+                            })
                         }
                     />
                 </div>
                 <button type="submit">Submit</button>
 
 
+                <button
+                    onClick={() => window.location.href = 'http://localhost:4000/auth/google'}>Login
+                    with Google
+                </button>
+
+
                 <span>
           Don't have an account ?<Link to="/register"> Register </Link>
         </span>
             </form>
-            <ToastContainer />
+            <ToastContainer/>
         </div>
     );
 }

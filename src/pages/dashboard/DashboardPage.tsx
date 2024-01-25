@@ -1,9 +1,11 @@
 
-import { useEffect } from "react";
+import  { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+
+
 
 export default function DashboardPage() {
     const goHome = () => {
@@ -27,7 +29,7 @@ export default function DashboardPage() {
                     removeCookie("jwt");
                     navigate("/login");
                 } else
-                    toast(`Hi ${data.user} 🦄`, {
+                    toast(`Hi ${data.user} `, {
                         theme: "dark",
                     });
             }
@@ -40,15 +42,19 @@ export default function DashboardPage() {
         navigate("/login");
     };
     return (
-        <div style={{
-            display: "flex",
-            gap: "1px",
-            WebkitFlexDirection: "column",
-            alignItems: "center"
-        }}>
-            <h1>Dashboard</h1>
+        <div className="container"style={{
+    display: "flex",
+        gap: "1px",
+        WebkitFlexDirection: "column",
+        alignItems: "center"}}>
+        <h2>Dashboard</h2>
+
 
             <button onClick={goHome}>Home</button>
+            <br/>
+            <button onClick={goHome}>Chat</button>
+            <br/>
+            <button onClick={goHome}>Hub</button>
             <br/>
             <button onClick={logOut}>Log out</button>
             <ToastContainer/>
